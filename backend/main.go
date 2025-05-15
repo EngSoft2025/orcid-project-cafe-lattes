@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"main/handlers"
-	"os"
+	"main/api"
+	"main/repository"
+	"main/service"
 
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -16,15 +16,15 @@ func main() {
 		fmt.Println("Error loading .env file")
 	}
 
-	router := gin.Default()
-	handlers := handlers.Handlers{}
+	repository := repository.NewRepository()
 
-	router.GET("/api/search", handlers.Search)
+	service := service.NewService(repository)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	controller := api.NewController(service)
+
+	fmt.Println("Controller successfully created. Starting server...")
+	
+	if err := controller.Start(); err != nil {
+		fmt.Println("Error starting controller:", err)
 	}
-
-	router.Run(":", port)
 }
