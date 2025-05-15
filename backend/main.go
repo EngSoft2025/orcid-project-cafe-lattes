@@ -6,10 +6,15 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	fmt.Println("Starting Backend Server")
+
+	if err := godotenv.Load(); err != nil {
+		fmt.Println("Error loading .env file")
+	}
 
 	router := gin.Default()
 	handlers := handlers.Handlers{}
