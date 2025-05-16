@@ -36,5 +36,5 @@ func (ct *Controller) Start() error {
 	}
 
 	fmt.Println("Running server on port", port)
-	return ct.gateway.Run(":" + "port") // todo: change to env variable
+	return ct.gateway.Run(":" + port) // todo: change to env variable
 }
