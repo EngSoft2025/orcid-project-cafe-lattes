@@ -55,7 +55,7 @@ func (r *Repository) GetPersonData(orcid_id string) (model.OrcidBiography, error
 }
 
 // Processes the ORCID biography data into a more usable format for use in frontend
-func (r *Repository) ProcessOrcidBiography(orcid_biography model.OrcidBiography) (model.BiographyData, error) {
+func (r *Repository) ProcessOrcidBiography(orcid_biography model.OrcidBiography) model.BiographyData {
 	biography_data := model.BiographyData{}
 
 	biography_data.Name = orcid_biography.Name.GivenNames.Value + " " + orcid_biography.Name.FamilyName.Value
@@ -74,5 +74,5 @@ func (r *Repository) ProcessOrcidBiography(orcid_biography model.OrcidBiography)
 	}
 	biography_data.ExternalIDs = orcid_biography.ExternalIdentifiers.ExternalIdentifier
 
-	return biography_data, nil
+	return biography_data
 }

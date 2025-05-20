@@ -1,7 +1,6 @@
 package service
 
 import (
-	"log"
 	"main/model"
 	"main/repository"
 )
@@ -20,17 +19,13 @@ func NewService(repository *repository.Repository) *Service {
 	}
 }
 
-func (s *Service) SearchBiography(orcid_id string) model.BiographyData {
+func (s *Service) SearchBiography(orcid_id string) (model.BiographyData, error) {
 	orcid_biography, err := s.repository.GetPersonData(orcid_id)
 	if err != nil {
-		log.Panicln("Could not get" + orcid_id + " biography data")
+		return model.BiographyData{}, err
 	}
 
-	biography_data, err := s.repository.ProcessOrcidBiography(orcid_biography)
-	if err != nil {
-		log.Println("Could not process" + orcid_id + " biography data")
-		log.Panicln("Internal Server Error")
-	}
+	biography_data := s.repository.ProcessOrcidBiography(orcid_biography)
 
-	return biography_data
+	return biography_data, nil
 }
