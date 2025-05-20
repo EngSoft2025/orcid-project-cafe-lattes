@@ -1,7 +1,8 @@
 package service
 
 import (
-	"fmt"
+	"log"
+	"main/model"
 	"main/repository"
 )
 
@@ -19,13 +20,17 @@ func NewService(repository *repository.Repository) *Service {
 	}
 }
 
-func (s *Service) Search(name, orcid_id string) (string, error) {
-	// todo: implement the logic here
+func (s *Service) SearchBiography(orcid_id string) model.BiographyData {
+	orcid_biography, err := s.repository.GetPersonData(orcid_id)
+	if err != nil {
+		log.Panicln("Could not get" + orcid_id + " biography data")
+	}
 
-	// call repository methods here to fetch from api, treat data, etc
+	biography_data, err := s.repository.ProcessOrcidBiography(orcid_biography)
+	if err != nil {
+		log.Println("Could not process" + orcid_id + " biography data")
+		log.Panicln("Internal Server Error")
+	}
 
-	// service functions only orchestrate the logic , they don't do anything by themselves
-
-	fmt.Println("service doing stuff with payload:", name, orcid_id)
-	return "", nil
+	return biography_data
 }
