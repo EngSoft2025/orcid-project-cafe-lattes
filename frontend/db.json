@@ -1,0 +1,124 @@
+{
+  "pesquisador": {
+    "id": "0000-0002-1234-5678",
+    "nome": "Maria L. Silva",
+    "areaPrincipal": "Ciência da Computação",
+    "foto": "/images/Maria.jpg",
+    "afiliacoes": [
+      {
+        "instituicao": "Universidade Federal do Brasil",
+        "descricao": "Departamento de Ciência da Computação • Professora Associada"
+      },
+      {
+        "instituicao": "Instituto de Pesquisas Avançadas",
+        "descricao": "Pesquisadora Colaboradora"
+      }
+    ],
+    "palavrasChave": [
+      "Machine Learning",
+      "Algoritmos",
+      "Processamento de Linguagem Natural",
+      "Redes Neurais",
+      "Análise de Dados",
+      "Inteligência Artificial"
+    ]
+  },
+  "publicacoes": [
+    {
+      "id": 1,
+      "titulo": "Deep Learning for Computer Vision: A Comprehensive Survey",
+      "tipo": "Journal Article",
+      "ano": 2022,
+      "periodico": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "doi": "https://doi.org/10.xxxx/vision-survey"
+    },
+    {
+      "id": 2,
+      "titulo": "Convolutional Neural Networks for Image Classification",
+      "tipo": "Conference Paper",
+      "ano": 2021,
+      "periodico": "Computer Vision and Pattern Recognition (CVPR)",
+      "doi": "https://doi.org/10.xxxx/cnn-classification"
+    },
+    {
+      "id": 3,
+      "titulo": "Transfer Learning Approaches for Medical Image Analysis",
+      "tipo": "Conference Paper",
+      "ano": 2021,
+      "periodico": "Medical Image Computing and Computer Assisted Intervention (MICCAI)",
+      "doi": "https://doi.org/10.xxxx/transfer-medical"
+    },
+    {
+      "id": 4,
+      "titulo": "Attention Mechanisms in Deep Neural Networks",
+      "tipo": "Conference Paper",
+      "ano": 2020,
+      "periodico": "Neural Information Processing Systems (NeurIPS)",
+      "doi": "https://doi.org/10.xxxx/attention-mechanisms"
+    },
+    {
+      "id": 5,
+      "titulo": "Federated Learning for Privacy-Preserving AI",
+      "tipo": "Journal Article",
+      "ano": 2020,
+      "periodico": "Journal of Machine Learning Research",
+      "doi": "https://doi.org/10.xxxx/federated-ai"
+    },
+    {
+      "id": 6,
+      "titulo": "Generative Adversarial Networks for Image Synthesis",
+      "tipo": "Conference Paper",
+      "ano": 2019,
+      "periodico": "International Conference on Machine Learning (ICML)",
+      "doi": "https://doi.org/10.xxxx/gan-image"
+    },
+    {
+      "id": 7,
+      "titulo": "Semi-Supervised Learning Methods for Limited Labeled Data",
+      "tipo": "Journal Article",
+      "ano": 2019,
+      "periodico": "IEEE Transactions on Neural Networks and Learning Systems",
+      "doi": "https://doi.org/10.xxxx/semi-supervised"
+    },
+    {
+      "id": 8,
+      "titulo": "Explainable AI for Medical Diagnosis",
+      "tipo": "Journal Article",
+      "ano": 2018,
+      "periodico": "Nature Medicine",
+      "doi": "https://doi.org/10.xxxx/explainable-medical"
+    },
+    {
+      "id": 9,
+      "titulo": "Interpretable Machine Learning Models",
+      "tipo": "Conference Paper",
+      "ano": 2018,
+      "periodico": "International Conference on Learning Representations (ICLR)",
+      "doi": "https://doi.org/10.xxxx/interpretable-ml"
+    },
+    {
+      "id": 10,
+      "titulo": "Reinforcement Learning in Healthcare",
+      "tipo": "Journal Article",
+      "ano": 2017,
+      "periodico": "Journal of Biomedical Informatics",
+      "doi": "https://doi.org/10.xxxx/rl-healthcare"
+    },
+    {
+      "id": 11,
+      "titulo": "Graph Neural Networks for Drug Discovery",
+      "tipo": "Conference Paper",
+      "ano": 2017,
+      "periodico": "AAAI Conference on Artificial Intelligence",
+      "doi": "https://doi.org/10.xxxx/gnn-drug"
+    },
+    {
+      "id": 12,
+      "titulo": "Bayesian Networks in Medical Imaging",
+      "tipo": "Journal Article",
+      "ano": 2016,
+      "periodico": "IEEE Journal of Biomedical and Health Informatics",
+      "doi": "https://doi.org/10.xxxx/bayesian-imaging"
+    }
+    ]
+}
