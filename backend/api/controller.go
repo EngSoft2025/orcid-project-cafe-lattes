@@ -22,9 +22,11 @@ func NewController(service *service.Service) *Controller {
 	}
 
 	// middleware definitions here
+	gateway.Use(gin.Logger())
+	gateway.Use(gin.Recovery())
 
 	// routes definition here
-	controller.gateway.GET("/api/search", controller.Search)
+	controller.gateway.GET("/api/searchBiography", controller.searchBiography)
 
 	return controller
 }
