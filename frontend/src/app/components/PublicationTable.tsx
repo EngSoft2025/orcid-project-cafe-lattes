@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getPublicacoesFiltradas } from '@/app/services/publications';
-import type { Publicacao } from '@/app/services/publications';
+import type { Publicacao } from '@/app/types';
 import { Search, LinkIcon } from 'lucide-react';
 
 // hook de debounce genérico

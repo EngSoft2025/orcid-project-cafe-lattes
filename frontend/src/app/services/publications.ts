@@ -1,12 +1,5 @@
-// Define o tipo `Publicacao`, que representa a estrutura de uma publicação
-export type Publicacao = {
-  id: number;       // Identificador único da publicação
-  titulo: string;   // Título da publicação
-  tipo: string;     // Tipo da publicação (ex.: artigo, livro, etc.)
-  ano: number;      // Ano de publicação
-  periodico: string; // Nome do periódico ou veículo de publicação
-  doi: string;      // DOI (Digital Object Identifier) da publicação
-};
+// Importa o tipo `Publicacao`
+import { Publicacao } from '@/app/types';
 
 // URL base para a API de publicações
 const BASE_URL = 'http://localhost:3001';

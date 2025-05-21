@@ -1,18 +1,6 @@
-// Define o tipo `Afiliacao`, que representa uma afiliação de um pesquisador
-export type Afiliacao = {
-  instituicao: string; // Nome da instituição de afiliação
-  descricao: string;   // Descrição da afiliação (ex.: cargo ou departamento)
-};
+// Importa o tipo `Pesquisador` do arquivo types.ts
+import { Pesquisador } from '@/app/types';
 
-// Define o tipo `Pesquisador`, que representa os dados de um pesquisador
-export type Pesquisador = {
-  id: string;              // Identificador único do pesquisador
-  nome: string;            // Nome completo do pesquisador
-  areaPrincipal: string;   // Área principal de atuação do pesquisador
-  foto: string;            // URL da foto do pesquisador
-  afiliacoes: Afiliacao[]; // Lista de afiliações do pesquisador
-  palavrasChave: string[]; // Palavras-chave relacionadas ao pesquisador
-};
 
 // URL base para a API de dados do pesquisador
 const BASE_URL = 'http://localhost:3001';

@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getPesquisador, Pesquisador } from '@/app/services/researcher';
-import { CheckCircle, IdCard } from 'lucide-react';
+import { getPesquisador } from '@/app/services/researcher';
+import { Pesquisador} from "@/app/types"
+import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ResearcherResume () {
