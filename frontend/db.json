@@ -119,6 +119,50 @@
       "ano": 2016,
       "periodico": "IEEE Journal of Biomedical and Health Informatics",
       "doi": "https://doi.org/10.xxxx/bayesian-imaging"
-    }
-    ]
+    }],
+    "metrics": {
+      "publicationsByYear": [
+        { "year": 2018, "count": 10 },
+        { "year": 2019, "count": 15 },
+        { "year": 2020, "count": 7 },
+        { "year": 2021, "count": 20 }
+      ],
+      "hIndex": 12,
+      "totalCitations": 234,
+      "publicationsByVenue": [
+        { "name": "Nature", "count": 7 },
+        { "name": "Science", "count": 5 },
+        { "name": "NeurIPS", "count": 10 },
+        { "name": "CVPR", "count": 8 }
+      ]
+    },
+    
+  "contact": {
+    "email": "maria.silva@universidade.edu.br",
+    "links": [
+      {
+        "name": "ORCID Profile",
+        "url": "https://orcid.org/0000-0002-1234-5678",
+        "icon": "orcid" 
+      },
+      {
+        "name": "Google Scholar",
+        "url": "https://scholar.google.com/citations?user=XXXXX",
+        "icon": "google-scholar"
+      },
+      {
+        "name": "ResearchGate",
+        "url": "https://www.researchgate.net/profile/Maria_Silva",
+        "icon": "researchgate"
+      },
+      {
+        "name": "Universidade Federal do Brasil",
+        "url": "https://www.ufb.br",
+        "icon": "university"
+      }
+    ]  
+  } 
+
+
+
 }
