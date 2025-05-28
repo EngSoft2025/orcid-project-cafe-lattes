@@ -38,7 +38,7 @@ export default function ContactSection() {
 
   if (isLoading) {
     return (
-      <section id="contact" className="bg-background-darker px-4 sm:px-[5%] lg:px-[15%] py-10">
+      <section id="contato" className="bg-background-darker px-4 sm:px-[5%] lg:px-[15%] py-10">
         <h2 className="text-xl font-semibold relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-yellow pl-4">
           Contato e Links
         </h2>
@@ -58,7 +58,7 @@ export default function ContactSection() {
 
   if (!contact) {
     return (
-      <section id="contact" className="bg-background-darker px-4 sm:px-[5%] lg:px-[15%] py-10">
+      <section id="contato" className="bg-background-darker px-4 sm:px-[5%] lg:px-[15%] py-10">
         <h2 className="text-xl font-semibold relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-yellow pl-4">
           Contato e Links
         </h2>
@@ -70,7 +70,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="bg-background-darker px-4 sm:px-[5%] lg:px-[15%] py-10">
+    <section id="contato" className="bg-background-darker px-4 sm:px-[5%] lg:px-[15%] py-10">
       <h2 className="text-xl font-semibold relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-yellow pl-4">
         Contato e Links
       </h2>

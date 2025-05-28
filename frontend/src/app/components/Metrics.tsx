@@ -1,21 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
-} from 'recharts';
 import { getMetrics, MetricsData } from '../services/metrics'; // Importa o serviço e os tipos
 import SingleDataCard from './Metrics/SingleDataCard';
 import PublicationsByYearChart from './Metrics/PublicationsByYearChart';
@@ -43,7 +28,7 @@ export default function Metrics() {
 
   if (loading) {
     return (
-      <section className="p-6">
+      <section className="p-6" id="metricas">
         <h2 className="text-white text-2xl font-semibold mb-6">Métricas</h2>
 
         <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -63,7 +48,7 @@ export default function Metrics() {
 
   if (!metrics) {
     return (
-      <section className="p-6">
+      <section className="p-6"  id="metricas">
         <h2 className="text-xl font-semibold relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-yellow pl-4">
           Metricas
         </h2>
@@ -73,7 +58,7 @@ export default function Metrics() {
   }
 
   return (
-    <section className="bg-background-darker mt-30 text-foreground px-4 sm:px-[5%] lg:px-[15%] py-10 flex flex-col gap-8 pb-50">
+    <section className="bg-background-darker mt-30 text-foreground px-4 sm:px-[5%] lg:px-[15%] py-10 flex flex-col gap-8 pb-50"  id="metricas">
       <h2 className="text-xl font-semibold relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-yellow pl-4">
         Metricas
       </h2>
