@@ -1,9 +1,5 @@
 package model
 
-type (
-	WorkData struct{}
-)
-
 type OrcidWork struct {
 	Group []struct {
 		WorkSummary []struct {
@@ -32,4 +28,15 @@ type OrcidWork struct {
 			} `json:"journal-title"`
 		} `json:"work-summary"`
 	} `json:"group"`
+}
+
+type WorkData struct {
+	Publications []struct {
+		Title   string `json:"title"`
+		Doi     string `json:"doi"`
+		Url     string `json:"url"`
+		Type    string `json:"type"`
+		Year    string `json:"year"`
+		Journal string `json:"journal"`
+	}
 }
