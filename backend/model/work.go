@@ -3,7 +3,7 @@ package model
 type OrcidWork struct {
 	Group []struct {
 		WorkSummary []struct {
-			PutCode string `json:"put-code"`
+			PutCode uint64 `json:"put-code"`
 			Title   struct {
 				Title struct {
 					Value string `json:"value"`

@@ -43,6 +43,26 @@ func (r *Repository) GetWorkData(orcid_id string) (model.OrcidWork, error) {
 
 func (r *Repository) ProcessOrcidWork(orcid_work model.OrcidWork) model.WorkData {
 	work_data := model.WorkData{}
+	for _, group := range orcid_work.Group {
+		for _, work := range group.WorkSummary {
+			work_data.Publications = append(work_data.Publications,
+				struct {
+					Title   string `json:"title"`
+					Doi     string `json:"doi"`
+					Url     string `json:"url"`
+					Type    string `json:"type"`
+					Year    string `json:"year"`
+					Journal string `json:"journal"`
+				}{
+					work.Title.Title.Value,
+					work.ExternalIds.ExternalId[0].Value,
+					work.Url.Value,
+					work.Type,
+					work.PublicationDate.Year.Value,
+					work.JournalTitle.Value,
+				})
+		}
+	}
 
 	return work_data
 }
