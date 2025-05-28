@@ -64,3 +64,44 @@ Name      string `json:"name"`
 
 ###### error: Could not get {orcid_id} biography data
 
+---
+
+### Work Query
+
+- GET
+- endpoint: `/api/Work`
+- query: `orcid_id` needs to be a valid orcid id
+
+#### Possible Reponses
+
+##### Success
+
+###### Code: 200
+
+###### Body
+
+```go
+type WorkData struct {
+	Publications []struct {
+		Title   string `json:"title"`
+		Doi     string `json:"doi"`
+		Url     string `json:"url"`
+		Type    string `json:"type"`
+		Year    string `json:"year"`
+		Journal string `json:"journal"`
+	}
+}
+```
+
+##### Incorrect Query
+
+###### Code: 400
+
+###### error: orcid_id is required
+
+##### Invalid OrcidId or OrcidAPI changed
+
+###### Code: 404
+
+###### error: Could not get {orcid_id} biography data
+
