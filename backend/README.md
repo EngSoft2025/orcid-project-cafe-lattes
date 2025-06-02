@@ -69,7 +69,7 @@ Name      string `json:"name"`
 ### Work Query
 
 - GET
-- endpoint: `/api/Work`
+- endpoint: `/api/searchWork`
 - query: `orcid_id` needs to be a valid orcid id
 
 #### Possible Reponses
@@ -82,14 +82,14 @@ Name      string `json:"name"`
 
 ```go
 type WorkData struct {
-	Publications []struct {
-		Title   string `json:"title"`
-		Doi     string `json:"doi"`
-		Url     string `json:"url"`
-		Type    string `json:"type"`
-		Year    string `json:"year"`
-		Journal string `json:"journal"`
-	}
+ Publications []struct {
+  Title   string `json:"title"`
+  Doi     string `json:"doi"`
+  Url     string `json:"url"`
+  Type    string `json:"type"`
+  Year    string `json:"year"`
+  Journal string `json:"journal"`
+ }
 }
 ```
 
@@ -104,4 +104,3 @@ type WorkData struct {
 ###### Code: 404
 
 ###### error: Could not get {orcid_id} biography data
-
