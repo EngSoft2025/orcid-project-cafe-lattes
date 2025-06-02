@@ -89,7 +89,7 @@ type WorkData struct {
   Type    string `json:"type"`
   Year    string `json:"year"`
   Journal string `json:"journal"`
- }
+ } `json:"publications"`
 }
 ```
 
