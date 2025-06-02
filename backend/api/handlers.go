@@ -84,3 +84,33 @@ func (ct *Controller) searchReseacherUrl(c *gin.Context) {
 
 	c.JSON(200, data)
 }
+
+func (ct *Controller) searchEducation(c *gin.Context) {
+	orcid_id, ok := c.GetQuery("orcid_id")
+	if !ok {
+		c.JSON(400, gin.H{"error": "orcid_id is required"})
+		return
+	}
+	data, err := ct.service.SearchEducation(orcid_id)
+	if err != nil {
+		c.JSON(404, gin.H{"error": "Could not get " + orcid_id + " education data"})
+		return
+	}
+
+	c.JSON(200, data)
+}
+
+func (ct *Controller) searchEmail(c *gin.Context) {
+	orcid_id, ok := c.GetQuery("orcid_id")
+	if !ok {
+		c.JSON(400, gin.H{"error": "orcid_id is required"})
+		return
+	}
+	data, err := ct.service.SearchEmail(orcid_id)
+	if err != nil {
+		c.JSON(404, gin.H{"error": "Could not get " + orcid_id + " email data"})
+		return
+	}
+
+	c.JSON(200, data)
+}
