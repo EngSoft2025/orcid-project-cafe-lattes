@@ -29,3 +29,14 @@ func (s *Service) SearchBiography(orcid_id string) (model.BiographyData, error) 
 
 	return biography_data, nil
 }
+
+func (s *Service) SearchWork(orcid_id string) (model.WorkData, error) {
+	orcid_work, err := s.repository.GetWorkData(orcid_id)
+	if err != nil {
+		return model.WorkData{}, err
+	}
+
+	work_data := s.repository.ProcessOrcidWork(orcid_work)
+
+	return work_data, nil
+}
