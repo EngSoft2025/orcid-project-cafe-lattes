@@ -30,6 +30,7 @@ func NewController(service *service.Service) *Controller {
 	controller.gateway.GET("/api/searchWork", controller.searchWork)
 	controller.gateway.GET("/api/searchKeyword", controller.searchKeyword)
 	controller.gateway.GET("/api/searchEmployment", controller.searchEmployment)
+	controller.gateway.GET("/api/searchReseacherUrl", controller.searchReseacherUrl)
 
 	return controller
 }

@@ -69,3 +69,18 @@ func (ct *Controller) searchEmployment(c *gin.Context) {
 
 	c.JSON(200, data)
 }
+
+func (ct *Controller) searchReseacherUrl(c *gin.Context) {
+	orcid_id, ok := c.GetQuery("orcid_id")
+	if !ok {
+		c.JSON(400, gin.H{"error": "orcid_id is required"})
+		return
+	}
+	data, err := ct.service.SearchReseacherUrls(orcid_id)
+	if err != nil {
+		c.JSON(404, gin.H{"error": "Could not get " + orcid_id + " reseacher url data"})
+		return
+	}
+
+	c.JSON(200, data)
+}
