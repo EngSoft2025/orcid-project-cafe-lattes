@@ -1,76 +1,62 @@
 package model
 
+type AffiliationStruct struct {
+	DepartmentName   *string `json:"department-name"`
+	RoleTitle        string  `json:"role-title"`
+	StartYear        *string `json:"start-year"`
+	StartMonth       *string `json:"start-month"`
+	EndYear          *string `json:"end-year"`
+	EndMonth         *string `json:"end-month"`
+	OrganizationName *string `json:"organization-name"`
+	URL              *string `json:"url,omitempty"`
+}
+
+type PublicationStruct struct {
+	Title   *string `json:"title"`
+	Doi     *string `json:"doi,omitempty"`
+	Url     *string `json:"url,omitempty"`
+	Type    string  `json:"type"`
+	Year    *string `json:"year"`
+	Journal *string `json:"journal,omitempty"`
+}
+
+type FundingsStruct struct {
+	Title            *string `json:"title"`
+	StartYear        *string `json:"start-year"`
+	StartMonth       *string `json:"start-month"`
+	EndYear          *string `json:"end-year"`
+	EndMonth         *string `json:"end-month"`
+	OrganizationName *string `json:"organization-name"`
+	URL              *string `json:"url,omitempty"`
+}
+
 type RecordDataResponse struct {
 	OrcidID string `json:"orcid-id"`
 	Person  struct {
-		GivenName        string
-		FamilyName       string
-		CreditName       string
-		BiographyContent string
+		GivenName        string  `json:"given-names"`
+		FamilyName       string  `json:"family-names"`
+		CreditName       *string `json:"credit-names"`
+		BiographyContent *string `json:"biography"`
 		Contact          struct {
-			Emails        []string
+			Emails        []string `json:"email"`
 			ResearcherURL []struct {
-				UrlName string `json:"url-name"`
-				Url     struct {
-					Value string `json:"value"`
-				} `json:"url"`
+				URLName string `json:"url-name"`
+				URL     string `json:"url"`
 			} `json:"researcher-url,omitempty"`
 		} `json:"contact"`
 	} `json:"person"`
 
-	Keywords []string
+	Keywords []string `json:"keywords"`
 
 	Affiliations struct {
-		Eduactions []struct {
-			DepartmentName   string
-			RoleTitle        string
-			StartYear        string
-			StartMonth       string
-			EndYear          string
-			EndMonth         string
-			OrganizationName string
-			URL              string
-		}
+		Eduactions []AffiliationStruct `json:"educations"`
 
-		Qualifications []struct {
-			DepartmentName   string
-			RoleTitle        string
-			StartYear        string
-			StartMonth       string
-			EndYear          string
-			EndMonth         string
-			OrganizationName string
-			URL              string
-		}
+		Qualifications []AffiliationStruct `json:"qualifications"`
 
-		Employments []struct {
-			DepartmentName   string
-			RoleTitle        string
-			StartYear        string
-			StartMonth       string
-			EndYear          string
-			EndMonth         string
-			OrganizationName string
-			URL              string
-		}
+		Employments []AffiliationStruct `json:"employments"`
 
-		Fundings []struct {
-			Title            string
-			StartYear        string
-			StartMonth       string
-			EndYear          string
-			EndMonth         string
-			OrganizationName string
-			URL              string
-		}
-	}
+		Fundings []FundingsStruct `json:"fundings"`
+	} `json:"affiliations"`
 
-	Publications []struct {
-		Title   string `json:"title"`
-		Doi     string `json:"doi"`
-		Url     string `json:"url"`
-		Type    string `json:"type"`
-		Year    string `json:"year"`
-		Journal string `json:"journal"`
-	} `json:"publications"`
+	Publications []PublicationStruct `json:"publications"`
 }

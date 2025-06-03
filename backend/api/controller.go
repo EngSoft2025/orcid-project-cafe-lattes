@@ -28,6 +28,7 @@ func NewController(service *service.Service) *Controller {
 	// routes definition here
 	controller.gateway.GET("/api/searchBiography", controller.searchBiography)
 	controller.gateway.GET("/api/searchWork", controller.searchWork)
+	controller.gateway.GET("/api/searchRecord", controller.searchRecord)
 
 	return controller
 }

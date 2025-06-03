@@ -40,3 +40,14 @@ func (s *Service) SearchWork(orcid_id string) (model.WorkData, error) {
 
 	return work_data, nil
 }
+
+func (s *Service) SearchRecord(orcid_id string) (model.RecordDataResponse, error) {
+	orcidRecord, err := s.repository.GetRecordData(orcid_id)
+	if err != nil {
+		return model.RecordDataResponse{}, err
+	}
+
+	responseData := s.repository.ProcessOrcidRecord(orcidRecord)
+
+	return responseData, nil
+}
