@@ -20,7 +20,6 @@ export default function Header() {
   const sectionIds: Record<string, string> = {
     "Resumo": "resumo",
     "Publicações": "publicacoes",
-    "Colaborações": "colaboracoes",
     "Métricas": "metricas",
     "Contato": "contato"
   };
@@ -82,7 +81,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <ul className="hidden md:flex gap-8 items-center">
-          {["Resumo", "Publicações", "Colaborações", "Métricas", "Contato"].map((item) => (
+          {["Resumo", "Publicações", "Métricas", "Contato"].map((item) => (
             <li key={item} className="relative group overflow-hidden">
               <button 
                 onClick={() => handleScroll(sectionIds[item])}
