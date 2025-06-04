@@ -11,10 +11,11 @@ import ResearcherResume from "../../components/ResearcherResume";
 import { fetchRecordData } from "@/app/services/api";
 import { extractResearcherData } from "@/utils/ResearcherUtil";
 import { extractPublicationsData } from "@/utils/PublicationsUtil";
+import { extractMetricsData } from "@/utils/MetricsUtil";
 import { extractContactData } from "@/utils/ContactUtil";
 
 //tipos
-import { Pesquisador, ContactData, Publicacao } from "@/app/types";
+import { Pesquisador, ContactData, Publicacao, MetricsData } from "@/app/types";
 
 
 interface ResearcherPageProps{
@@ -31,6 +32,7 @@ export default async function ResearcherPage(props: ResearcherPageProps) {
   let pesquisador: Pesquisador | null = null;
   let contactData: ContactData | null = null;
   let publicacoes: Publicacao[] = []
+  let metricas: MetricsData | null = null;
 
   try{
     const record = await fetchRecordData(orcidId)
@@ -39,6 +41,7 @@ export default async function ResearcherPage(props: ResearcherPageProps) {
     pesquisador = extractResearcherData(record);
     contactData = extractContactData(record)
     publicacoes = extractPublicationsData(record)
+    metricas = extractMetricsData(record)
 
   }catch(error){
 
@@ -50,7 +53,7 @@ export default async function ResearcherPage(props: ResearcherPageProps) {
     <div className="bg-background-darker min-h-screen">
       <ResearcherResume pesquisador={pesquisador} />
       <PublicationTable publicacoes={publicacoes} />
-      <Metrics />
+      <Metrics metricas={metricas}/>
       <ContactSection contact={contactData}/>
     </div>
   );  

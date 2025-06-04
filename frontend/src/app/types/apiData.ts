@@ -55,4 +55,16 @@ export interface RecordDataResponse {
   };
 
   publications: PublicationStruct[];
+
+  MetricsData: {
+    PublicationsByYear: Array<{
+      year: string; // ex.: "2022"
+      count: number;
+    }>;
+    PublicationsByJournal: Array<{
+      title: string;
+      count: number;
+    }>;
+    "h-index": number;
+  };
 }

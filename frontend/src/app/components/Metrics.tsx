@@ -1,52 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getMetrics, MetricsData } from '../services/metrics'; // Importa o serviço e os tipos
 import SingleDataCard from './Metrics/SingleDataCard';
 import PublicationsByYearChart from './Metrics/PublicationsByYearChart';
 import PublicationsByVenueChart from './Metrics/PublicationsByVenueChart';
+import { MetricsData } from '../types';
 
-export default function Metrics() {
-  const [metrics, setMetrics] = useState<MetricsData | null>(null);
-  const [loading, setLoading] = useState(true);
+interface MetricsProps {
+  metricas: MetricsData | null;
+}
 
-  useEffect(() => {
-    async function fetchMetrics() {
-      setLoading(true);
-      try {
-        const data = await getMetrics(); // Usa o serviço para buscar as métricas
-        setMetrics(data);
-      } catch (error) {
-        console.error('Erro ao buscar métricas:', error);
-        setMetrics(null);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchMetrics();
-  }, []);
+export default function Metrics({ metricas }: MetricsProps) {  
 
-  if (loading) {
-    return (
-      <section className="p-6" id="metricas">
-        <h2 className="text-white text-2xl font-semibold mb-6">Métricas</h2>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="bg-gray-700 rounded-lg h-24 animate-pulse" />
-          ))}
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="bg-gray-700 rounded-lg h-80 animate-pulse" />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
-  if (!metrics) {
+  if (!metricas) {
     return (
       <section className="p-6"  id="metricas">
         <h2 className="text-xl font-semibold relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-yellow pl-4">
@@ -66,19 +33,19 @@ export default function Metrics() {
       <div>
         {/* Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <SingleDataCard title='Total de Publicações' value={metrics.publicationsByYear.reduce((acc, cur) => acc + cur.count, 0)}/>
-          <SingleDataCard title='Índice H' value={metrics.hIndex}/>
-          <SingleDataCard title='Citações' value={metrics.totalCitations}/>
+          <SingleDataCard title='Total de Publicações' value={metricas.publicationsByYear.reduce((acc, cur) => acc + cur.count, 0)}/>
+          <SingleDataCard title='Índice H' value={metricas.hIndex}/>
+          {/* <SingleDataCard title='Citações' value={metricas.totalCitations}/> */}
         </div>
 
         {/* Graficos */}
         <div className="grid md:grid-cols-2 gap-6">
 
           {/* Publications by Year */}
-          <PublicationsByYearChart data={metrics.publicationsByYear} />
+          <PublicationsByYearChart data={metricas.publicationsByYear} />
 
           {/* Publications by Venue */}
-          <PublicationsByVenueChart data={metrics.publicationsByVenue} />
+          <PublicationsByVenueChart data={metricas.publicationsByVenue} />
         </div>
       </div>
     </section>

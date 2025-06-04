@@ -48,6 +48,6 @@ export type VenueMetric = {
 export type MetricsData = {
   publicationsByYear: YearMetric[];
   hIndex: number;
-  totalCitations: number;
+  totalCitations?: number;
   publicationsByVenue: VenueMetric[];
 };
