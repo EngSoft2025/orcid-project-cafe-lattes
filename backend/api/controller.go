@@ -3,12 +3,14 @@ package api
 import (
 	"fmt"
 	"main/service"
+	"net/http"
 	"os"
 
-	"github.com/gin-gonic/gin"
-	ginSwagger "github.com/swaggo/gin-swagger"
-	swaggerFiles "github.com/swaggo/files"
 	_ "main/docs"
+
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Controller struct {
@@ -24,11 +26,29 @@ func NewController(service *service.Service) *Controller {
 		service: service,
 	}
 
-	// middleware definitions here
+	// CORS middleware
+	gateway.Use(func(c *gin.Context) {
+		// Configura os cabeçalhos de CORS
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		// Responde às requisições preflight (OPTIONS)
+		if c.Request.Method == "OPTIONS" {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "*") // Certifique-se de incluir este cabeçalho
+			c.AbortWithStatus(http.StatusOK)
+			return
+		}
+
+		c.Next()
+	})
+
+	// other middleware definitions
 	gateway.Use(gin.Logger())
 	gateway.Use(gin.Recovery())
 
-	// routes definition here
+	// routes definition
 	controller.gateway.GET("/api/searchBiography", controller.searchBiography)
 	controller.gateway.GET("/api/searchWork", controller.searchWork)
 	controller.gateway.GET("/api/searchRecord", controller.searchRecord)
@@ -46,5 +66,5 @@ func (ct *Controller) Start() error {
 	}
 
 	fmt.Println("Running server on port", port)
-	return ct.gateway.Run(":" + port) // todo: change to env variable
+	return ct.gateway.Run(":" + port)
 }
