@@ -15,6 +15,14 @@ So, the repository layer should offer small functions that does specific and uni
 
 ## Requests
 
+### Swagger
+
+To see the detailed requests definitions, parameters and responses, see:
+
+```txt
+localhost:8080/api/swagger/index.html
+```
+
 ### Biography Query
 
 - GET
