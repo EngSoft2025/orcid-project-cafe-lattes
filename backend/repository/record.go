@@ -318,5 +318,82 @@ func (r *Repository) ProcessOrcidRecord(orcidRecord model.OrcidRecord) model.Rec
 		}
 	}
 
+	// Genetate Metrics Data based on publications read from Orcid Record
+	for _, group := range orcidRecord.ActivitiesSummary.Works.Group {
+		for _, summary := range group.WorkSummary {
+			if summary.PublicationDate != nil {
+				year := summary.PublicationDate.Year.Value
+				// Check if the year already exists in the metrics data
+				found := false
+				for i, data := range recordData.MetricsData.PublicationsByYear {
+					if data.Year == year {
+						recordData.MetricsData.PublicationsByYear[i].Count++
+						found = true
+						break
+					}
+				}
+				// If the year does not exist, add a new entry
+				if !found {
+					recordData.MetricsData.PublicationsByYear = append(recordData.MetricsData.PublicationsByYear,
+						struct {
+							Year  string `json:"year"`
+							Count int    `json:"count"`
+						}{
+							Year:  year,
+							Count: 1,
+						})
+				}
+			}
+		}
+	}
+	// Sort the metrics data by year
+	for i := 0; i < len(recordData.MetricsData.PublicationsByYear)-1; i++ {
+		for j := i + 1; j < len(recordData.MetricsData.PublicationsByYear); j++ {
+			if recordData.MetricsData.PublicationsByYear[i].Year > recordData.MetricsData.PublicationsByYear[j].Year {
+				// Swap the elements
+				recordData.MetricsData.PublicationsByYear[i], recordData.MetricsData.PublicationsByYear[j] = recordData.MetricsData.PublicationsByYear[j], recordData.MetricsData.PublicationsByYear[i]
+			}
+		}
+	}
+
+	// Generate Metrics Data of PublicationsByJournal
+	for _, group := range orcidRecord.ActivitiesSummary.Works.Group {
+		for _, summary := range group.WorkSummary {
+			if summary.JournalTitle != nil {
+				journalTitle := summary.JournalTitle.Value
+				// Check if the journal title already exists in the metrics data
+				found := false
+				for i, data := range recordData.MetricsData.PublicationsByJournal {
+					if data.Title == journalTitle {
+						recordData.MetricsData.PublicationsByJournal[i].Count++
+						found = true
+						break
+					}
+				}
+				// If the journal title does not exist, add a new entry
+				if !found {
+					recordData.MetricsData.PublicationsByJournal = append(recordData.MetricsData.PublicationsByJournal,
+						struct {
+							Title string `json:"title"`
+							Count int    `json:"count"`
+						}{
+							Title: journalTitle,
+							Count: 1,
+						})
+				}
+			}
+		}
+	}
+
+	// Sort the metrics data by journal title
+	for i := 0; i < len(recordData.MetricsData.PublicationsByJournal)-1; i++ {
+		for j := i + 1; j < len(recordData.MetricsData.PublicationsByJournal); j++ {
+			if recordData.MetricsData.PublicationsByJournal[i].Title > recordData.MetricsData.PublicationsByJournal[j].Title {
+				// Swap the elements
+				recordData.MetricsData.PublicationsByJournal[i], recordData.MetricsData.PublicationsByJournal[j] = recordData.MetricsData.PublicationsByJournal[j], recordData.MetricsData.PublicationsByJournal[i]
+			}
+		}
+	}
+
 	return recordData
 }

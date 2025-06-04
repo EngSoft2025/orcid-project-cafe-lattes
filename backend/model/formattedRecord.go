@@ -59,4 +59,16 @@ type RecordDataResponse struct {
 	} `json:"affiliations"`
 
 	Publications []PublicationStruct `json:"publications"`
+
+	MetricsData struct {
+		PublicationsByYear []struct {
+			Year  string `json:"year"`
+			Count int    `json:"count"`
+		}
+		PublicationsByJournal []struct {
+			Title string `json:"title"`
+			Count int    `json:"count"`
+		}
+		HIndex int `json:"h-index"`
+	}
 }
