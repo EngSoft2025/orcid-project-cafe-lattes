@@ -1,28 +1,10 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { getContact, ContactData } from '@/app/services/contact';
 import { ArrowRight } from 'lucide-react';
+import { ContactData } from '../types';
 
-export default function ContactSection() {
-  const [contact, setContact] = useState<ContactData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchContact() {
-      try {
-        const data = await getContact();
-        setContact(data);
-      } catch (error) {
-        console.error('Erro ao buscar contato:', error);
-        setContact(null);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchContact();
-  }, []);
+interface ContactSectionProps {
+  contact: ContactData | null;
+}
+export default function ContactSection( {contact}: ContactSectionProps ) {
 
   const getIconForLink = (name: string) => {
     name = name.toLowerCase();
@@ -35,26 +17,6 @@ export default function ContactSection() {
 
     return '/images/baseImage.png'; // Ícone padrão
   };
-
-  if (isLoading) {
-    return (
-      <section id="contato" className="bg-background-darker px-4 sm:px-[5%] lg:px-[15%] py-10">
-        <h2 className="text-xl font-semibold relative before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-1 before:h-6 before:bg-primary-yellow pl-4">
-          Contato e Links
-        </h2>
-        <div className="max-w-md mx-auto">
-          <div className="h-12 mb-4 bg-background rounded animate-pulse" />
-          <div className="space-y-3">
-            {Array(3)
-              .fill(0)
-              .map((_, i) => (
-                <div key={i} className="h-14 bg-background rounded animate-pulse" />
-              ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   if (!contact) {
     return (

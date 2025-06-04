@@ -23,3 +23,31 @@ export type Pesquisador = {
   afiliacoes: Afiliacao[]; // Lista de afiliações do pesquisador
   palavrasChave: string[]; // Palavras-chave relacionadas ao pesquisador
 };
+
+export type ContactLink = {
+  name: string;   
+  url: string;    
+  icon: string;   
+};
+
+export type ContactData = {
+  email: string;        //sempre o primeiro e-mail (se houver vários)
+  links: ContactLink[];
+};
+
+export type YearMetric = {
+  year: number;
+  count: number;
+};
+
+export type VenueMetric = {
+  name: string;
+  count: number;
+};
+
+export type MetricsData = {
+  publicationsByYear: YearMetric[];
+  hIndex: number;
+  totalCitations: number;
+  publicationsByVenue: VenueMetric[];
+};

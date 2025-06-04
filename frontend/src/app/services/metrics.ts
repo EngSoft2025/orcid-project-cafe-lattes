@@ -1,19 +1,3 @@
-export type YearMetric = {
-  year: number;
-  count: number;
-};
-
-export type VenueMetric = {
-  name: string;
-  count: number;
-};
-
-export type MetricsData = {
-  publicationsByYear: YearMetric[];
-  hIndex: number;
-  totalCitations: number;
-  publicationsByVenue: VenueMetric[];
-};
 
 const BASE_URL = 'http://localhost:3001'; // ajuste se usar outra porta
 
