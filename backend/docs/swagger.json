@@ -1,0 +1,253 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "ORCID API",
+        "contact": {
+            "name": "Caffe Lattes"
+        },
+        "version": "1.0.0"
+    },
+    "host": "localhost:port",
+    "basePath": "/",
+    "paths": {
+        "/api/searchRecord": {
+            "get": {
+                "description": "Searches a record by ORCID ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "record"
+                ],
+                "summary": "Searches a record by ORCID ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ORCID ID",
+                        "name": "orcid_id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.RecordDataResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.AffiliationStruct": {
+            "type": "object",
+            "properties": {
+                "department-name": {
+                    "type": "string"
+                },
+                "end-month": {
+                    "type": "string"
+                },
+                "end-year": {
+                    "type": "string"
+                },
+                "organization-name": {
+                    "type": "string"
+                },
+                "role-title": {
+                    "type": "string"
+                },
+                "start-month": {
+                    "type": "string"
+                },
+                "start-year": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.FundingsStruct": {
+            "type": "object",
+            "properties": {
+                "end-month": {
+                    "type": "string"
+                },
+                "end-year": {
+                    "type": "string"
+                },
+                "organization-name": {
+                    "type": "string"
+                },
+                "start-month": {
+                    "type": "string"
+                },
+                "start-year": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.PublicationStruct": {
+            "type": "object",
+            "properties": {
+                "doi": {
+                    "type": "string"
+                },
+                "journal": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.RecordDataResponse": {
+            "type": "object",
+            "properties": {
+                "affiliations": {
+                    "type": "object",
+                    "properties": {
+                        "educations": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.AffiliationStruct"
+                            }
+                        },
+                        "employments": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.AffiliationStruct"
+                            }
+                        },
+                        "fundings": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.FundingsStruct"
+                            }
+                        },
+                        "qualifications": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.AffiliationStruct"
+                            }
+                        }
+                    }
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "metricsData": {
+                    "type": "object",
+                    "properties": {
+                        "h-index": {
+                            "type": "integer"
+                        },
+                        "publicationsByJournal": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "count": {
+                                        "type": "integer"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "publicationsByYear": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "count": {
+                                        "type": "integer"
+                                    },
+                                    "year": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "orcid-id": {
+                    "type": "string"
+                },
+                "person": {
+                    "type": "object",
+                    "properties": {
+                        "biography": {
+                            "type": "string"
+                        },
+                        "contact": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "researcher-url": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "url": {
+                                                "type": "string"
+                                            },
+                                            "url-name": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "credit-names": {
+                            "type": "string"
+                        },
+                        "family-names": {
+                            "type": "string"
+                        },
+                        "given-names": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "publications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.PublicationStruct"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -40,7 +40,14 @@ func (ct *Controller) searchWork(c *gin.Context) {
 	c.JSON(200, data)
 }
 
-// Handler that Responds query for Record Data
+// @Summary Searches a record by ORCID ID
+// @Description Searches a record by ORCID ID
+// @Tags record
+// @Accept  json
+// @Produce  json
+// @Param orcid_id query string true "ORCID ID"
+// @Success 200 {object} model.RecordDataResponse
+// @Router /api/searchRecord [get]
 func (ct *Controller) searchRecord(c *gin.Context) {
 	orcid_id, ok := c.GetQuery("orcid_id")
 	if !ok {

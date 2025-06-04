@@ -6,6 +6,9 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	swaggerFiles "github.com/swaggo/files"
+	_ "main/docs"
 )
 
 type Controller struct {
@@ -29,6 +32,9 @@ func NewController(service *service.Service) *Controller {
 	controller.gateway.GET("/api/searchBiography", controller.searchBiography)
 	controller.gateway.GET("/api/searchWork", controller.searchWork)
 	controller.gateway.GET("/api/searchRecord", controller.searchRecord)
+
+	// swagger !!!
+	controller.gateway.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return controller
 }

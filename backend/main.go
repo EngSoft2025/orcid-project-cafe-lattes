@@ -9,6 +9,11 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// @title ORCID API
+// @version 1.0.0
+// @contact.name Caffe Lattes
+// @host localhost:port
+// @BasePath /
 func main() {
 	fmt.Println("Starting Backend Server")
 

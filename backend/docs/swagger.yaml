@@ -1,0 +1,164 @@
+basePath: /
+definitions:
+  model.AffiliationStruct:
+    properties:
+      department-name:
+        type: string
+      end-month:
+        type: string
+      end-year:
+        type: string
+      organization-name:
+        type: string
+      role-title:
+        type: string
+      start-month:
+        type: string
+      start-year:
+        type: string
+      url:
+        type: string
+    type: object
+  model.FundingsStruct:
+    properties:
+      end-month:
+        type: string
+      end-year:
+        type: string
+      organization-name:
+        type: string
+      start-month:
+        type: string
+      start-year:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    type: object
+  model.PublicationStruct:
+    properties:
+      doi:
+        type: string
+      journal:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      url:
+        type: string
+      year:
+        type: string
+    type: object
+  model.RecordDataResponse:
+    properties:
+      affiliations:
+        properties:
+          educations:
+            items:
+              $ref: '#/definitions/model.AffiliationStruct'
+            type: array
+          employments:
+            items:
+              $ref: '#/definitions/model.AffiliationStruct'
+            type: array
+          fundings:
+            items:
+              $ref: '#/definitions/model.FundingsStruct'
+            type: array
+          qualifications:
+            items:
+              $ref: '#/definitions/model.AffiliationStruct'
+            type: array
+        type: object
+      keywords:
+        items:
+          type: string
+        type: array
+      metricsData:
+        properties:
+          h-index:
+            type: integer
+          publicationsByJournal:
+            items:
+              properties:
+                count:
+                  type: integer
+                title:
+                  type: string
+              type: object
+            type: array
+          publicationsByYear:
+            items:
+              properties:
+                count:
+                  type: integer
+                year:
+                  type: string
+              type: object
+            type: array
+        type: object
+      orcid-id:
+        type: string
+      person:
+        properties:
+          biography:
+            type: string
+          contact:
+            properties:
+              email:
+                items:
+                  type: string
+                type: array
+              researcher-url:
+                items:
+                  properties:
+                    url:
+                      type: string
+                    url-name:
+                      type: string
+                  type: object
+                type: array
+            type: object
+          credit-names:
+            type: string
+          family-names:
+            type: string
+          given-names:
+            type: string
+        type: object
+      publications:
+        items:
+          $ref: '#/definitions/model.PublicationStruct'
+        type: array
+    type: object
+host: localhost:port
+info:
+  contact:
+    name: Caffe Lattes
+  title: ORCID API
+  version: 1.0.0
+paths:
+  /api/searchRecord:
+    get:
+      consumes:
+      - application/json
+      description: Searches a record by ORCID ID
+      parameters:
+      - description: ORCID ID
+        in: query
+        name: orcid_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.RecordDataResponse'
+      summary: Searches a record by ORCID ID
+      tags:
+      - record
+swagger: "2.0"
