@@ -1,16 +1,22 @@
+// components/Header.tsx
+
 'use client';
 
 import { useState } from "react";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search as SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { fetchRecordData } from "../services/api";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchBy, setSearchBy] = useState<'orcid' | 'name'>('orcid');
   const [searchInput, setSearchInput] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isVerifying, setIsVerifying] = useState(false);
+
   const router = useRouter();
 
-  // Mapeando os itens para os ids das seções (certifique-se de que esses ids existam na página)
+  // Mapeia cada item para o ID correspondente no DOM
   const sectionIds: Record<string, string> = {
     "Resumo": "resumo",
     "Publicações": "publicacoes",
@@ -23,17 +29,44 @@ export default function Header() {
     const element = document.getElementById(section);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
-      setMenuOpen(false); // Fecha o menu móvel, se necessário
+      setMenuOpen(false);
     }
   };
 
-  const handleSearch = () => {
-    if (searchBy === 'orcid' && searchInput.trim() !== "") {
-      // Navega para /Researcher/[orcidId]
-      router.push(`/Researcher/${searchInput.trim()}`);
+  const handleSearch = async () => {
+    setErrorMessage(null);
+
+    // === 1) Busca por ORCID ===
+    if (searchBy === 'orcid') {
+      const orcidId = searchInput.trim();
+      if (!orcidId) {
+        setErrorMessage("Por favor, insira um ORCID válido.");
+        return;
+      }
+      
+      setIsVerifying(true);
+      
+      try {
+        // CHAMA fetchRecordData, que já faz a requisição única
+        await fetchRecordData(orcidId);
+        // Se não lançou erro, significa que encontrou o pesquisador
+        router.push(`/researcher/${orcidId}`);
+      } catch (err) {
+        // fetchRecordData lança erro se res.ok for false (por exemplo 404)
+        setErrorMessage("Pesquisador não encontrado para este ORCID.");
+      } finally {
+        setIsVerifying(false);
+      }
+
+    // === 2) Busca por NOME ===
     } else {
-      // Aqui você pode tratar busca por nome ou exibir mensagem, se necessário
-      console.log("A busca por nome não foi implementada ou o campo está vazio.");
+      const nome = searchInput.trim();
+      if (!nome) {
+        setErrorMessage("Por favor, insira um nome para buscar.");
+        return;
+      }
+      // Redireciona para uma página genérica de resultados de busca
+      router.push(`/search?name=${encodeURIComponent(nome)}`);
     }
   };
 
@@ -53,7 +86,8 @@ export default function Header() {
             <li key={item} className="relative group overflow-hidden">
               <button 
                 onClick={() => handleScroll(sectionIds[item])}
-                className="text-clara-gray hover:text-primary-yellow-hover transition-colors font-semibold text-sm cursor-pointer">
+                className="text-clara-gray hover:text-primary-yellow-hover transition-colors font-semibold text-sm cursor-pointer"
+              >
                 {item}
                 <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-primary-yellow group-hover:w-full transition-all duration-300 ease-in-out"></span>
               </button>
@@ -78,7 +112,8 @@ export default function Header() {
             <li key={item}>
               <button 
                 onClick={() => handleScroll(sectionIds[item])}
-                className="text-clara-gray hover:text-primary-yellow-hover transition font-medium">
+                className="text-clara-gray hover:text-primary-yellow-hover transition font-medium"
+              >
                 {item}
               </button>
             </li>
@@ -88,7 +123,7 @@ export default function Header() {
 
       {/* Search Bar */}
       <div className="w-full flex flex-col my-5">
-        {/* Tabs */}
+        {/* Tabs de tipo de busca */}
         <div className="flex overflow-hidden gap-2">
           <button
             className={`px-4 py-2 rounded-t-md cursor-pointer transition-colors border text-sm font-medium ${
@@ -96,43 +131,72 @@ export default function Header() {
                 ? 'bg-primary-yellow text-black border-primary-yellow'
                 : 'bg-clara-gray-dark text-foreground border-border-color'
             }`}
-            onClick={() => setSearchBy('orcid')}
+            onClick={() => {
+              setSearchBy('orcid');
+              setErrorMessage(null);
+            }}
           >
             ORCID ID
           </button>
 
           <button
-            className={`px-4 rounded-t-md cursor-pointer transition-colors border text-sm font-medium ${
+            className={`px-4 py-2 rounded-t-md cursor-pointer transition-colors border text-sm font-medium ${
               searchBy === 'name'
                 ? 'bg-primary-yellow text-black border-primary-yellow'
                 : 'bg-clara-gray-dark text-foreground border-border-color'
             }`}
-            onClick={() => setSearchBy('name')}
+            onClick={() => {
+              setSearchBy('name');
+              setErrorMessage(null);
+            }}
           >
             Nome
           </button>
         </div>
-        <div className="w-full gap-3">
-          {/* Input + Search Button */}
-          <div className="flex w-full items-center gap-3 md:flex-row">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                placeholder={
-                  searchBy === 'orcid' ? 'Buscar por ORCID ID (xxxx-xxxx-xxxx-xxxx)' : 'Digite um nome'
-                }
-                className="w-full px-4 py-2 bg-background border border-border-color rounded-r-md rounded-b-md text-sm text-foreground placeholder-clara-gray-light focus:outline-none focus:ring-2 focus:ring-primary-yellow focus:shadow-primary-yellow"
-              />
-              <Search className="absolute right-3 top-2.5 text-clara-gray-light" size={18} />
-            </div>
-            <button onClick={handleSearch} className="bg-primary-yellow text-black px-4 py-2 rounded-md flex items-center gap-2 font-medium text-sm hover:bg-primary-yellow-hover transition cursor-pointer">
-              <Search size={16} /> Buscar
-            </button>
+
+        {/* Input + Botão */}
+        <div className="mt-2 flex w-full items-center gap-3 md:flex-row">
+          <div className="relative flex-1">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+                setErrorMessage(null);
+              }}
+              placeholder={
+                searchBy === 'orcid'
+                  ? 'Buscar por ORCID ID (xxxx-xxxx-xxxx-xxxx)'
+                  : 'Digite um nome'
+              }
+              className="w-full px-4 py-2 bg-background border border-border-color rounded-r-md rounded-b-md text-sm text-foreground placeholder-clara-gray-light focus:outline-none focus:ring-2 focus:ring-primary-yellow focus:shadow-primary-yellow"
+            />
+            <SearchIcon className="absolute right-3 top-2.5 text-clara-gray-light" size={18} />
           </div>
+
+          <button
+            onClick={handleSearch}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${
+              isVerifying
+                ? 'bg-clara-gray-dark text-clara-gray cursor-not-allowed'
+                : 'bg-primary-yellow text-black hover:bg-primary-yellow-hover'
+            }`}
+            disabled={isVerifying}
+          >
+            {isVerifying ? "Verificando…" : (
+              <>
+                <SearchIcon size={16} /> Buscar
+              </>
+            )}
+          </button>
         </div>
+
+        {/* Mensagem de erro, se houver */}
+        {errorMessage && (
+          <p className="mt-2 text-sm text-red-500">{errorMessage}</p>
+        )}
       </div>
+
       <div className="w-full border border-border-color" />
     </header>
   );

@@ -1,17 +1,14 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { getPesquisador } from '@/app/services/researcher';
-import { Pesquisador } from "@/app/types";
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 
-export default function ResearcherResume () {
-  const [pesquisador, setPesquisador] = useState<Pesquisador | null>(null);
 
-  useEffect(() => {
-    getPesquisador().then(setPesquisador).catch(console.error);
-  }, []);
+import { Pesquisador, Afiliacao } from '@/app/types';
+
+interface ResearcherResumeProps {
+  pesquisador: Pesquisador | null;
+}
+
+export default function ResearcherResume({ pesquisador }: ResearcherResumeProps) {  
 
   if (!pesquisador)
     return (
@@ -84,10 +81,10 @@ export default function ResearcherResume () {
         {/* Lado direito - dados */}
         <div className="flex-1 flex flex-col gap-4">
           <h3 className="text-2xl font-bold">{pesquisador.nome}</h3>
-          <p>
+          {/* <p>
             <span className="font-semibold">Área principal:</span>{' '}
             {pesquisador.areaPrincipal}
-          </p>
+          </p> */}
           <div>
             <p className="font-semibold mb-2">Afiliações:</p>
             {pesquisador.afiliacoes.map((af, index) => (
