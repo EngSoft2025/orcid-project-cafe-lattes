@@ -50,7 +50,7 @@ export default function Header() {
         // CHAMA fetchRecordData, que já faz a requisição única
         await fetchRecordData(orcidId);
         // Se não lançou erro, significa que encontrou o pesquisador
-        router.push(`/researcher/${orcidId}`);
+        router.push(`/Researcher/${orcidId}`);
       } catch (err) {
         // fetchRecordData lança erro se res.ok for false (por exemplo 404)
         setErrorMessage("Pesquisador não encontrado para este ORCID.");
