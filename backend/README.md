@@ -112,3 +112,44 @@ type WorkData struct {
 ###### Code: 404
 
 ###### error: Could not get {orcid_id} biography data
+
+---
+
+### Search By Name Query
+
+- GET
+- endpoint: `/api/searchResearchersByName`
+- query: `name`
+
+#### Possible Reponses
+
+##### Success
+
+###### Code: 200
+
+###### Body
+
+The response will be the ResearcherResults struct
+```go
+type Researcher struct {
+	Orcid_id string `json:"orcid_id"`
+	Name     string `json:"name"`
+}
+
+type ResearcherResults struct {
+	Researchers []Researcher `json:"researchers"`
+	NumFound    int          `json:"num_found"`
+}
+```
+
+##### Incorrect Query
+
+###### Code: 400
+
+###### error: name is required
+
+##### Could not find name
+
+###### Code: 404
+
+###### error: Could not get researchers by name: {name}
