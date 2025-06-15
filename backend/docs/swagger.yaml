@@ -133,6 +133,22 @@ definitions:
           $ref: '#/definitions/model.PublicationStruct'
         type: array
     type: object
+  model.Researcher:
+    properties:
+      name:
+        type: string
+      orcid_id:
+        type: string
+    type: object
+  model.ResearcherResults:
+    properties:
+      num_found:
+        type: integer
+      researchers:
+        items:
+          $ref: '#/definitions/model.Researcher'
+        type: array
+    type: object
 host: localhost:port
 info:
   contact:
@@ -161,4 +177,25 @@ paths:
       summary: Searches a record by ORCID ID
       tags:
       - record
+  /api/searchResearchersByName:
+    get:
+      consumes:
+      - application/json
+      description: Searches Researchers by Name
+      parameters:
+      - description: Researcher Name
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResearcherResults'
+      summary: Searches Researchers by Name
+      tags:
+      - search
 swagger: "2.0"
