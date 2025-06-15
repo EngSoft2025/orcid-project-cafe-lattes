@@ -8,6 +8,7 @@ import ResearcherResume from "../../components/ResearcherResume";
 
 
 //api e utils
+import type { Metadata } from "next";
 import { fetchRecordData } from "@/app/services/api";
 import { extractResearcherData } from "@/utils/ResearcherUtil";
 import { extractPublicationsData } from "@/utils/PublicationsUtil";
@@ -18,23 +19,28 @@ import { extractContactData } from "@/utils/ContactUtil";
 import { Pesquisador, ContactData, Publicacao, MetricsData } from "@/app/types";
 
 
-interface ResearcherPageProps{
-  params:{
+interface ResearcherPageProps {
+  params: {
     orcidId: string;
   };
 }
 
+export const metadata: Metadata = {
+  title: "CLARA",
+  description: "Cafe Lattes Application for Research Assistance",
+};
+
 export default async function ResearcherPage(props: ResearcherPageProps) {
   const resolvedParams = await Promise.resolve(props.params);
 
-  const {orcidId} = resolvedParams;
+  const { orcidId } = resolvedParams;
 
   let pesquisador: Pesquisador | null = null;
   let contactData: ContactData | null = null;
   let publicacoes: Publicacao[] = []
   let metricas: MetricsData | null = null;
 
-  try{
+  try {
     const record = await fetchRecordData(orcidId)
 
     //Extraindo dados da requisicao para utilizar nos componentes
@@ -43,7 +49,7 @@ export default async function ResearcherPage(props: ResearcherPageProps) {
     publicacoes = extractPublicationsData(record)
     metricas = extractMetricsData(record)
 
-  }catch(error){
+  } catch (error) {
 
     contactData = null
   }
@@ -53,8 +59,8 @@ export default async function ResearcherPage(props: ResearcherPageProps) {
     <div className="bg-background-darker min-h-screen">
       <ResearcherResume pesquisador={pesquisador} />
       <PublicationTable publicacoes={publicacoes} />
-      <Metrics metricas={metricas}/>
-      <ContactSection contact={contactData}/>
+      <Metrics metricas={metricas} />
+      <ContactSection contact={contactData} />
     </div>
-  );  
+  );
 }
