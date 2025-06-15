@@ -74,3 +74,26 @@ func TestRecord(t *testing.T) {
 	defer resp.Body.Close()
 	println("Response Body:", string(body))
 }
+
+func TestSearchByName(t *testing.T) {
+	println("Testing Search by Name API")
+	name := "Maria+Do+Carmo"
+	resp, err := http.Get("http://localhost:8080/api/searchResearchersByName?name=" + name)
+	if err != nil {
+		t.Fatalf("Failed to make request: %v", err)
+	}
+
+	println("Response Status:", resp.Status)
+	for _, values := range resp.Header {
+		for _, value := range values {
+			println("Header_data:", value)
+		}
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatalf("Failed to read response body: %v", err)
+	}
+	defer resp.Body.Close()
+	println("Response Body:", string(body))
+}
