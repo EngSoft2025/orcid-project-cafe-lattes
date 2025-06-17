@@ -63,3 +63,26 @@ func (ct *Controller) searchRecord(c *gin.Context) {
 
 	c.JSON(200, data)
 }
+
+// @Summary Searches Researchers by Name
+// @Description Searches Researchers by Name
+// @Tags search
+// @Accept  json
+// @Produce  json
+// @Param name query string true "Researcher Name"
+// @Success 200 {object} model.ResearcherResults
+// @Router /api/searchResearchersByName [get]
+func (ct *Controller) searchResearchersByName(c *gin.Context) {
+	name, ok := c.GetQuery("name")
+	if !ok {
+		c.JSON(400, gin.H{"error": "name is required"})
+		return
+	}
+	data, err := ct.service.SearchResearchersByName(name)
+	if err != nil {
+		c.JSON(404, gin.H{"error": "Could not get researchers by name: " + name})
+		return
+	}
+
+	c.JSON(200, data)
+}

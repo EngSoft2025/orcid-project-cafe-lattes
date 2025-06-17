@@ -48,6 +48,38 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/searchResearchersByName": {
+            "get": {
+                "description": "Searches Researchers by Name",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "search"
+                ],
+                "summary": "Searches Researchers by Name",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Researcher Name",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ResearcherResults"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -252,6 +284,31 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.PublicationStruct"
+                    }
+                }
+            }
+        },
+        "model.Researcher": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "orcid_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.ResearcherResults": {
+            "type": "object",
+            "properties": {
+                "num_found": {
+                    "type": "integer"
+                },
+                "researchers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Researcher"
                     }
                 }
             }

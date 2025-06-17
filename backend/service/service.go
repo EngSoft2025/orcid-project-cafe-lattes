@@ -51,3 +51,12 @@ func (s *Service) SearchRecord(orcid_id string) (model.RecordDataResponse, error
 
 	return responseData, nil
 }
+
+func (s *Service) SearchResearchersByName(name string) (model.ResearcherResults, error) {
+	ResearcherResults, err := s.repository.SearchByName(name)
+	if err != nil {
+		return model.ResearcherResults{}, err
+	}
+
+	return ResearcherResults, nil
+}

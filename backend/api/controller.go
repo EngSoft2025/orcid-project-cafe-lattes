@@ -52,6 +52,7 @@ func NewController(service *service.Service) *Controller {
 	controller.gateway.GET("/api/searchBiography", controller.searchBiography)
 	controller.gateway.GET("/api/searchWork", controller.searchWork)
 	controller.gateway.GET("/api/searchRecord", controller.searchRecord)
+	controller.gateway.GET("/api/searchResearchersByName", controller.searchResearchersByName)
 
 	// swagger !!!
 	controller.gateway.GET("/api/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
