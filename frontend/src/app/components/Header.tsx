@@ -5,7 +5,8 @@
 import { useState } from "react";
 import { Menu, X, Search as SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { fetchRecordData } from "../services/api";
+
+import { fetchRecordData, fetchResearchersByName, ResearcherSummary } from "../services/api";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,6 +15,9 @@ export default function Header() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
 
+  const [searchResults, setSearchResults] = useState<ResearcherSummary[]>([]);
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const router = useRouter();
 
   // Mapeia cada item para o ID correspondente no DOM
@@ -64,8 +68,24 @@ export default function Header() {
         setErrorMessage("Por favor, insira um nome para buscar.");
         return;
       }
-      // Redireciona para uma página genérica de resultados de busca
-      router.push(`/search?name=${encodeURIComponent(nome)}`);
+
+      setSearchLoading(true);
+      try {
+        const data = await fetchResearchersByName(nome);
+        console.log("🔍 raw data:", data);
+        const results = data.researchers;          // <-- aqui
+        if (results.length === 0) {
+          setErrorMessage("Nenhum pesquisador encontrado com esse nome.");
+        } else {
+          setSearchResults(results);
+          setModalOpen(true);
+        }
+      } catch (err) {
+        console.error(err);
+        setErrorMessage("Erro ao buscar pesquisadores.");
+      } finally {
+        setSearchLoading(false);
+      }
     }
   };
 
@@ -197,6 +217,61 @@ export default function Header() {
       </div>
 
       <div className="w-full border border-border-color" />
+    
+    
+      {modalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 bg-opacity-50"
+          onClick={() => setModalOpen(false)}
+        >
+          <div
+            className="relative bg-background border border-border-color rounded-lg shadow-lg w-11/12 max-w-md p-6"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Botão de fechar */}
+            <button
+              onClick={() => setModalOpen(false)}
+              aria-label="Fechar modal"
+              className="absolute top-4 right-4 text-clara-gray hover:text-foreground transition-colors"
+            >
+              <X size={20} />
+            </button>
+      
+            {/* Título */}
+            <h3 className="text-xl font-semibold text-center text-foreground mb-4">
+              Selecione um pesquisador
+            </h3>
+      
+            {/* Lista com divisão e scroll */}
+            <ul className="max-h-64 overflow-y-auto divide-y divide-border-color">
+              {searchResults.map(r => (
+                <li key={r.orcid_id}>
+                  <button
+                    onClick={() => {
+                      setModalOpen(false);
+                      router.push(`/Researcher/${r.orcid_id}`);
+                    }}
+                    className="w-full flex justify-between items-center cursor-pointer border border-background hover:border-primary-yellow py-3 px-4 hover:bg-background-darker transition-colors"
+                  >
+                    <span className="font-medium text-foreground">{r.name}</span>
+                    <span className="text-sm text-clara-gray-light">{r.orcid_id}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+      
+            {/* Botão Cancelar */}
+            <button
+              onClick={() => setModalOpen(false)}
+              className="mt-6 w-full cursor-pointer py-2 bg-background-dark border border-border-color rounded-md text-center font-medium hover:bg-background-darker transition-colors"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+    )}
+
+    
     </header>
   );
 }
