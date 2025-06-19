@@ -32,11 +32,40 @@ type OrcidWork struct {
 
 type WorkData struct {
 	Publications []struct {
-		Title   string `json:"title"`
-		Doi     string `json:"doi"`
-		Url     string `json:"url"`
-		Type    string `json:"type"`
-		Year    string `json:"year"`
-		Journal string `json:"journal"`
+		Title     string `json:"title"`
+		Doi       string `json:"doi"`
+		Url       string `json:"url"`
+		Type      string `json:"type"`
+		Year      string `json:"year"`
+		Journal   string `json:"journal"`
+		Citations int    `json:"citations"`
 	} `json:"publications"`
+}
+
+// h index
+type HExternalID struct {
+	Type  string `json:"external-id-type"`
+	Value string `json:"external-id-value"`
+}
+
+type HWorkSummary struct {
+	ExternalIDs struct {
+		ExternalID []HExternalID `json:"external-id"`
+	} `json:"external-ids"`
+}
+
+type HWorksResponse struct {
+	Group []struct {
+		WorkSummary []HWorkSummary `json:"work-summary"`
+	} `json:"group"`
+}
+
+// citation couint
+
+type Paper struct {
+	CitationCount int `json:"citationCount"`
+}
+
+type CitationCountReponse struct {
+	CitationCount int `json:citation-count"`
 }

@@ -2,6 +2,7 @@ package repository
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"main/model"
 	"net/http"
@@ -45,6 +46,17 @@ func (r *Repository) ProcessOrcidWork(orcid_work model.OrcidWork) model.WorkData
 	work_data := model.WorkData{}
 	for _, group := range orcid_work.Group {
 		for _, work := range group.WorkSummary {
+
+			var doi string = ""
+			if work.ExternalIds.ExternalId != nil && len(work.ExternalIds.ExternalId) > 0 {
+				doi = work.ExternalIds.ExternalId[0].Value
+			}
+			
+			count, err := r.GetCitationCount(doi)
+			if err != nil {
+				fmt.Println("WARNING - could not find citation count for doi " + doi)
+			}
+		
 			work_data.Publications = append(work_data.Publications,
 				struct {
 					Title   string `json:"title"`
@@ -53,16 +65,19 @@ func (r *Repository) ProcessOrcidWork(orcid_work model.OrcidWork) model.WorkData
 					Type    string `json:"type"`
 					Year    string `json:"year"`
 					Journal string `json:"journal"`
+					Citations int `json:"citations"`
 				}{
 					work.Title.Title.Value,
-					work.ExternalIds.ExternalId[0].Value,
+					doi,
 					work.Url.Value,
 					work.Type,
 					work.PublicationDate.Year.Value,
 					work.JournalTitle.Value,
+					count,
 				})
 		}
 	}
 
 	return work_data
 }
+

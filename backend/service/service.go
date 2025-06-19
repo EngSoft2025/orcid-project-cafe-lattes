@@ -1,8 +1,10 @@
 package service
 
 import (
+	"fmt"
 	"main/model"
 	"main/repository"
+	"strconv"
 )
 
 // service layer here
@@ -59,4 +61,44 @@ func (s *Service) SearchResearchersByName(name string) (model.ResearcherResults,
 	}
 
 	return ResearcherResults, nil
+}
+
+func (s * Service) CalculateHIndex(orcid_id string) error {
+	// getting all works from an orcid id
+	orcid_work, err := s.repository.GetWorkData(orcid_id)
+	if err != nil {
+		return err
+	}
+
+	work_data := s.repository.ProcessOrcidWork(orcid_work) // parsing the data,, we only need the doi 
+
+	var citations []int
+	var notFound int = 0
+
+	for _, work := range work_data.Publications {
+		count, err := s.repository.GetCitationCount(work.Doi)
+		if err != nil {
+			fmt.Println("warning: doi not found: ", work.Doi)
+			notFound++
+		}
+
+		citations = append(citations, count)
+	}
+
+	hIndex := s.repository.CalculateHIndex(citations)
+
+	fmt.Println("\nh index for author {" + orcid_id + "}: " + strconv.Itoa(hIndex))
+	fmt.Println("n of dois not found: " + strconv.Itoa(notFound))
+
+	return nil
+}
+
+func (s* Service ) GetCitationCound(doi string) (int, error) {
+	count, err := s.repository.GetCitationCount(doi)
+	if err != nil {
+		fmt.Println("could not get citation count for doi " + doi + ". Err: " + err.Error())
+		return -1, err
+	}
+
+	return count, nil
 }
