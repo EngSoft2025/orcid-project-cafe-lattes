@@ -34,7 +34,7 @@ export default function Metrics({ metricas }: MetricsProps) {
         {/* Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           <SingleDataCard title='Total de Publicações' value={metricas.publicationsByYear.reduce((acc, cur) => acc + cur.count, 0)}/>
-          <SingleDataCard title='Índice H' value={metricas.hIndex}/>
+          {/* <SingleDataCard title='Índice H' value={metricas.hIndex}/> */}
           {/* <SingleDataCard title='Citações' value={metricas.totalCitations}/> */}
         </div>
 
