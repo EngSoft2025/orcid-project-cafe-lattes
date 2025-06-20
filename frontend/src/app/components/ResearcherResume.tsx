@@ -55,11 +55,11 @@ export default function ResearcherResume({ pesquisador }: ResearcherResumeProps)
         <div className="flex flex-col items-center md:items-start gap-3">
           <div className="relative">
             <Image
-              src={pesquisador.foto}
-              alt={`Foto de ${pesquisador.nome}`}
+              src="/images/orcidImage.png"
+              alt="ORCID"
               width={130}
               height={130}
-              className="rounded-full border-4 border-primary-yellow"
+              className="select-none border-4 border-primary-yellow rounded-full"
             />
             <CheckCircle
               className="absolute bottom-0 right-0 bg-background-darker rounded-full text-green-400"
@@ -67,13 +67,6 @@ export default function ResearcherResume({ pesquisador }: ResearcherResumeProps)
             />
           </div>
           <div className="flex items-center justify-center gap-2 text-sm text-primary-green font-mono">
-            <Image
-              src="/images/orcidImage.png"
-              alt="ORCID"
-              width={15}
-              height={15}
-              className="select-none"
-            />
             {pesquisador.id}
           </div>
         </div>
