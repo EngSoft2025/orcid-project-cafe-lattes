@@ -62,12 +62,12 @@ func createORCIDSearchRequest(apiLink, firstName, familyName string) (*http.Requ
 	// 2. Construct the raw query string for the 'q' parameter.
 	// We still use Sprintf here just to build the *value*, not the whole URL.
 	// Note the quotes around the family name for an exact phrase search.
-	orcidQuery := fmt.Sprintf("given-names:%s AND family-name:\"%s\"", firstName, familyName)
+	orcidQuery := fmt.Sprintf("given-names:%s OR family-name:\"%s\"", firstName, familyName)
 
 	// 3. Create a url.Values map to hold all query parameters.
 	params := url.Values{}
 	params.Set("q", orcidQuery)
-	params.Set("rows", "4")
+	params.Set("rows", "10")
 
 	// 4. Create the final URL. The Encode() method handles all the necessary
 	//    URL encoding for spaces, quotes, and other special characters safely.
